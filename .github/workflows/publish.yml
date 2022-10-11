@@ -3,8 +3,6 @@ on: [push]
 jobs:
   publish-mattermost-arm64:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_IMAGE: ${{ github.repository_owner }}/mattermost
     steps:
     - name: Checkout the code  
       uses: actions/checkout@v3
@@ -32,4 +30,4 @@ jobs:
         build-args: |
           MM_VERSION=7.3.0
         push: true
-        tags: ghcr.io/${DOCKER_IMAGE}:latest,ghcr.io/${DOCKER_IMAGE}:7.3.0
+        tags: ghcr.io/${{ github.repository_owner }}/mattermost:latest, ghcr.io/${{ github.repository_owner }}/mattermost:7.3.0
