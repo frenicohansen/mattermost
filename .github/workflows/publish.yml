@@ -1,0 +1,19 @@
+name: publish
+on: [push]
+jobs:
+  publish-mattermost-arm64:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build the Mattermost Docker image
+      run: |
+            MM_VERSION="7.3.0"
+            docker build . --tag ghcr.io/${{ github.repository_owner }}/mattermost:${MM_VERSION} --tag ghcr.io/${{ github.repository_owner }}/mattermost:latest --build-arg MM_VERSION="${MM_VERSION}"
+            docker push ghcr.io/${{ github.repository_owner }}/mattermost:${MM_VERSION}
+            docker push ghcr.io/${{ github.repository_owner }}/mattermost:latest
