@@ -10,6 +10,8 @@ jobs:
     # https://github.com/docker/setup-qemu-action
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
+      with:
+        platforms: 'arm64'
 
     # https://github.com/docker/setup-buildx-action
     - name: Set up Docker Buildx
@@ -28,6 +30,6 @@ jobs:
         context: .
         platforms: linux/arm64
         build-args: |
-          MM_VERSION=7.3.0
+          MM_VERSION=v7.3.0
         push: true
         tags: ghcr.io/${{ github.repository_owner }}/mattermost:latest, ghcr.io/${{ github.repository_owner }}/mattermost:7.3.0
